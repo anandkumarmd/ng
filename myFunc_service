@@ -106,3 +106,21 @@
   </div>
 </body>
 </html>
+<!--
+output
+CarService.wheels : myService = [object Object] 
+CarFactory.wheels : myFactory = ::Bad 
+CarProvider.wheels : myProvider = function (numCylinder) { this.numCylinder = numCylinder; this.dealer = dealerName; } 
+
+CarService.wheels : {"dealer":"Bad","numCylinder":4} 
+CarFactory.wheels : {"dealer":"Bad","numCylinder":6} 
+CarProvider.wheels : {"numCylinder":6,"dealer":"Good"} 
+
+CarService.wheels : 4 Bad
+CarFactory.wheels : 6 Bad
+CarProvider.wheels : 6 Good
+
+CarService.wheels : 4 Bad
+CarFactory.wheels : 8 Bad
+CarProvider.wheels : 8 Good
+-->
