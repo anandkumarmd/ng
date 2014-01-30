@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <script src="//code.angularjs.org/1.2.4/angular.min.js"></script>
+  <script>
+  
+  var CarFunc = function() {
+      var dealerName = 'Bad';
+      this.$get = function() {
+          return function(numCylinder) {
+              this.numCylinder = numCylinder;
+              this.dealer = dealerName;
+          }
+      };
+      this.setDealerName = function(str) {
+        dealerName = str;
+      }      
+      return "::"+dealerName;
+      //return numCylinder+"::"+dealerName;      
+  }
+
+  var app = angular.module('app', []);
+  
+  app.service('myService', CarFunc );  //[object Object] 
+  app.factory('myFactory', CarFunc );
+  app.provider('myProv',   CarFunc );
+  
+  app.controller('CarController', function($scope, myService, myFactory, myProv) {
+			$scope.service = "myService = " + myService;
+			$scope.factory = "myFactory = " + myFactory;
+			$scope.provider = "myProvider = " + myProv;
+  })
+  
+  
+  app.service('CarService', function() {
+      this.dealer="Bad";
+      this.numCylinder = 4;
+  });
+  
+  app.factory('CarFactory', function() {
+      return function(numCylinder) {
+          this.dealer="Bad";
+          this.numCylinder = numCylinder;
+      };
+  });
+  
+  app.provider('Car', function() {
+      var dealerName = 'Bad';
+      this.$get = function() {
+          return function(numCylinder) {
+              this.numCylinder = numCylinder;
+              this.dealer = dealerName;
+          }
+      };
+      this.setDealerName = function(str) {
+        dealerName = str;
+      }  
+  });
+  
+  app.config(function(CarProvider) {
+    CarProvider.setDealerName('Good');
+  })
+
+  app.controller('MyCarController', function($scope, CarService, CarFactory, Car) {
+    $scope.service = CarService; 
+    $scope.factory = new CarFactory(6);
+    $scope.provider = new Car(6);
+  })  
+  
+  app.controller('YourCarController', function($scope, CarService, CarFactory, Car) {
+    $scope.service = CarService;
+    $scope.factory = new CarFactory(8);
+    $scope.provider = new Car(8);
+  })  
+
+  </script>
+    
+</head>
+<body ng-app="app">
+
+  <div ng-controller="CarController">
+    CarService.wheels : {{service}} <br/>
+    CarFactory.wheels : {{factory}}  <br/>
+    CarProvider.wheels : {{provider}} <br/>
+  </div>
+
+  <br/>
+  <div ng-controller="MyCarController">
+    CarService.wheels : {{service}} <br/>
+    CarFactory.wheels : {{factory}}  <br/>
+    CarProvider.wheels : {{provider}} <br/>
+  </div>
+
+  <br/>
+  <div ng-controller="MyCarController">
+    CarService.wheels : {{service.numCylinder}} {{service.dealer}}<br/>
+    CarFactory.wheels : {{factory.numCylinder}}  {{factory.dealer}}<br/>
+    CarProvider.wheels : {{provider.numCylinder}} {{provider.dealer}}<br/>
+  </div>
+  
+  <br/>
+  <div ng-controller="YourCarController">
+    CarService.wheels : {{service.numCylinder}}  {{service.dealer}}<br/>
+    CarFactory.wheels : {{factory.numCylinder}}  {{factory.dealer}}<br/>
+    CarProvider.wheels : {{provider.numCylinder}}  {{provider.dealer}}<br/>
+  </div>
+</body>
+</html>
