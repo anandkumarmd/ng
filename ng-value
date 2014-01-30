@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+  <style>
+.bold { font-weight:bold; }
+  
+table td{
+    padding: 10px;
+}
+
+table th{
+    font-weight: bold;
+    text-align: center;
+}  
+  </style>
+</head>
+<body>
+  <div ng-app="shopping">
+		<div ng-controller="ShoppingCartCtrl">
+		<div>Sort by: 
+            <select ng-model="sortExpression">
+					<option value="Name">Name</option>
+					<option value="Price">Price</option>
+					<option value="Quantity">Quantity</option>
+				</select>
+            </div>
+			<br />
+			<div><strong>Filter Results</strong></div>
+			<table>
+				<tr>
+					<td>By Any: </td>
+					<td><input type="text" ng-model="search.$" /></td>
+				</tr>
+				<tr>
+					<td>By Name: </td>
+					<td><input type="text" ng-model="search.Name" /></td>
+				</tr>
+				<tr>
+					<td>By Price: </td>
+					<td><input type="text" ng-model="search.Price" /></td>
+				</tr>
+				<tr>
+					<td>By Quantity: </td>
+					<td><input type="text" ng-model="search.Quantity" /></td>
+				</tr>
+			</table>
+            <br />
+			<table border="1">
+				<thead>
+					<tr>
+						<td>Name</td>
+						<td>Price</td>
+						<td>Quantity</td>
+						<td>Remove</td>
+                        <td>Edit</td>
+					</tr>
+				</thead>
+				<tbody ng-repeat="item in items | orderBy:mySortFunction | filter:search">
+					<tr>
+						<td>{{item.Name}}</td>
+						<td>{{item.Price | rupee}}</td>
+						<td>{{item.Quantity}}</td>
+						<td><input type="button" value="Remove" ng-click="removeItem($index)" /></td>
+                        <td><input type="button" value="Edit" ng-click="modify($index)" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<div>Total Price: {{totalPrice()}}</div>
+			<br />
+			<table>
+				<tr>
+					<td>Name: </td>
+					<td><input type="text" ng-model="item.Name" /></td>
+				</tr>
+				<tr>
+					<td>Price: </td>
+					<td><input type="text" ng-model="item.Price" /></td>
+				</tr>
+				<tr>
+					<td>Quantity: </td>
+					<td><input type="text" ng-model="item.Quantity" /></td>
+				</tr>
+				<tr>
+                    <td colspan="2"><input type="Button" ng-click="addOrEditItem(item)" value="{{buttonText}}"/> </td>
+					
+				</tr>
+			</table>
+		</div>
+	</div>
+  <script>
+angular.module('shopping',[])
+			.value('shopping_cart_operations',{
+				items : [
+					{Name: "Soap", Price: "25", Quantity: "10"},
+					{Name: "Shaving cream", Price: "50", Quantity: "15"},
+					{Name: "Shampoo", Price: "100", Quantity: "5"}
+					],
+				addItem: function(item){
+					this.items.push(item);
+				},
+				totalPrice: function(){
+					var total = 0;
+					for(count=0;count<this.items.length;count++){
+						total += this.items[count].Price*this.items[count].Quantity;
+					}
+					return total;
+				},
+				removeItem: function(index){
+					this.items.splice(index,1);
+				},
+                modifyItem: function(item){
+					for(counter=0;counter<this.items.length;counter++){
+						if(this.items[counter].$$hashKey == item.$$hashKey){
+							this.items[counter] = item;
+							break;
+						}
+					}
+                }
+			})
+			.filter('rupee',function(){
+				return function(item){
+					return "Rs. "+item+".00";
+				}
+			});
+
+function ShoppingCartCtrl($scope,shopping_cart_operations)  {
+	$scope.items = shopping_cart_operations.items;
+	$scope.item = {};
+    $scope.buttonText = "Add";
+
+	$scope.addOrEditItem = function(item) {
+        if($scope.buttonText == "Add"){
+		    shopping_cart_operations.addItem(item);
+        }
+        else{
+            shopping_cart_operations.modifyItem(item);
+			//var index = $index;
+            $scope.buttonText="Add";
+        }
+		$scope.item = {}; //clear out item object
+	};
+    
+	$scope.totalPrice = shopping_cart_operations.totalPrice;
+		
+	$scope.removeItem = function(index){
+		shopping_cart_operations.removeItem(index);
+	};
+    
+    $scope.modify = function(index){
+        $scope.item=angular.copy($scope.items[index]);
+        $scope.buttonText="Edit";
+    };
+		
+	$scope.mySortFunction = function(item) {
+		if(isNaN(item[$scope.sortExpression]))
+			return item[$scope.sortExpression];
+		return parseInt(item[$scope.sortExpression]);
+	}
+}    
+  </script>  
+</body>
+</html>
