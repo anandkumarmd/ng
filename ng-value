@@ -58,7 +58,9 @@ table th{
                         <td>Edit</td>
 					</tr>
 				</thead>
+              
 				<tbody ng-repeat="item in items | orderBy:mySortFunction | filter:search">
+                <!-- <tbody ng-repeat="item in items">   -->
 					<tr>
 						<td>{{item.Name}}</td>
 						<td>{{item.Price | rupee}}</td>
@@ -92,7 +94,39 @@ table th{
 		</div>
 	</div>
   <script>
+    var myFunc = function() {
+      return {
+				items : [
+					{Name: "Soap", Price: "25", Quantity: "10"},
+					{Name: "Shaving cream", Price: "50", Quantity: "15"},
+					{Name: "Shampoo", Price: "100", Quantity: "5"}
+					],
+				addItem: function(item){
+					this.items.push(item);
+				},
+				totalPrice: function(){
+					var total = 0;
+					for(count=0;count<this.items.length;count++){
+						total += this.items[count].Price*this.items[count].Quantity;
+					}
+					return total;
+				},
+				removeItem: function(index){
+					this.items.splice(index,1);
+				},
+                modifyItem: function(item){
+					for(counter=0;counter<this.items.length;counter++){
+						if(this.items[counter].$$hashKey == item.$$hashKey){
+							this.items[counter] = item;
+							break;
+						}
+					}
+                }
+      }
+    };
 angular.module('shopping',[])
+.value('shopping_cart_operations', myFunc())
+/*
 			.value('shopping_cart_operations',{
 				items : [
 					{Name: "Soap", Price: "25", Quantity: "10"},
@@ -121,10 +155,8 @@ angular.module('shopping',[])
 					}
                 }
 			})
-			.filter('rupee',function(){
-				return function(item){
-					return "Rs. "+item+".00";
-				}
+*/            
+			.filter('rupee',function(){	return function(item){return "Rs. "+item+".00";}
 			});
 
 function ShoppingCartCtrl($scope,shopping_cart_operations)  {
