@@ -1,0 +1,92 @@
+//http://clevertech.biz/devblog/angularjs-factory-service-provider
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+<script>
+//service  (return one method, NO init)
+angular.module('starwars', []).service('VaderService',  function(){
+  this.speak = function (name) {
+    return 'Join the dark side ' + name;
+  }
+});
+function StarWarsController( VaderService) {
+  VaderService.speak('Luke');
+}  
+  
+//factory  (return one klass)
+angular.module('starwars', []).factory('VaderService', function () {
+  var VaderClass = function(padawan) {
+    this.name = padawan;
+    this.speak = function () {
+      return 'Join the dark side ' + this.name;
+    }
+  }
+  return VaderClass;
+});
+function StarWarsController( VaderService) {
+  var luke = new VaderService('Luke');
+  luke.speak();
+ 
+  var leila = new VaderService('Leila');
+  leila.speak();
+}
+
+//provider  (return of choice klass based on init)
+var starWarsApp = angular.module('starwars', []);
+starWarsApp.provider('Vader', function () {
+  var darkSide = true;
+  this.joinDarkSide = function(s){
+    darkSide = s;
+  }
+  var VaderClass = function(padawan) {
+   this.name = padawan;
+   this.speak = function () {
+     return 'Join the dark side ' + this.name;
+   }
+  }
+  var AnakinClass = function(padawan) {
+   this.name = padawan;
+   this.speak = function () {
+     return 'The force is strong in our family ' + this.name;
+   }
+  }
+  this.$get = function() {
+   if (darkSide){
+     return VaderClass;
+   } else {
+     return AnakinClass;
+   }
+  };
+});
+starWarsApp.config(function(VaderProvider){
+  VaderProvider.joinDarkSide(false);
+});
+function StarWarsController( VaderProvider) {
+  var luke = new VaderProvider('Luke');
+  luke.speak();
+ 
+  var leila = new VaderProvider('Leila');
+  leila.speak();
+}
+
+//constant & value
+starWarsApp.value('weapon','lightsaber');
+function StarWarsController(weapon) {
+    // weapon injected
+}
+starWarsApp.constant('weapon','lightsaber');
+starWarsApp.config(function(weapon){
+​   // weapon ready in config phase
+});
+  
+  </script>  
+  
+  </head>
+<body>
+  
+  
+</body>
+</html>
