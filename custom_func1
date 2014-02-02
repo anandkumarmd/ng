@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+  <script src="//code.angularjs.org/1.2.4/angular.min.js"></script>
+  <script>
+  
+  var CarFunc = function() {
+      var dealerName = 'Bad';
+      this.$get = function() {
+          return function(numCylinder) {
+              this.numCylinder = numCylinder;
+              this.dealer = dealerName;
+          }
+      };
+      //provider
+      this.setDealerName = function(str) {
+        dealerName = str;
+      }      
+      return "::"+dealerName;
+      //return numCylinder+"::"+dealerName;      
+  }
+  
+  var AutoFunc = function() {//init
+    var name = "msft";
+    var speedVar = 500; 
+    var speakFunc = function (arg2) {
+      speed = arg2 === undefined? speed: arg2;
+      return "Auto name is '"+this.name+" and speed is '" + arg2;
+    }
+    //factory method;
+    return function(init) {
+      this.name = (init === undefined ? name : init);
+      this.speed = speedVar;
+      this.speaker = speakFunc;
+      this.test = "Kumar";
+    }
+  }
+  
+  /*
+  var BikeFunc = function(arg1, arg2) {//init
+     var name = arg1;//local 
+     var speed = arg2;
+    this.speak = function () {
+       return 'Bike name is ' + this.name + ' and speed is '+ speed;
+     }
+  }
+  
+  var AeroFunc = function(arg1) {//init
+   var name = arg1;
+   var speed = 500; 
+   this.speak = function (arg2)) {
+     speed = arg2 === undefined? speed: arg2;
+     return "Aero name is '"+this.name+" and speed is '" + arg2;
+   }
+  }
+  */
+  var app = angular.module('app', []);
+  
+  //app.service('autoService', AutoFunc );  //[object Object] 
+  app.factory('myAutoFactory', AutoFunc);
+  //app.provider('autoProv',   AutoFunc );
+  app.controller('AutoController', function($scope, myAutoFactory) {
+            //$scope.service = "autoService = " + autoService;
+            //$scope.factory = "autoFactory = " + new myAutoFactory("Kool");
+            $scope.factory = new myAutoFactory("Kool");  
+            $scope.factory1 = new myAutoFactory();  
+            //$scope.provider = "autoProvider = " + autoProv;
+  })
+    
+  app.service('myService', CarFunc );  //[object Object] 
+  app.factory('myFactory', CarFunc );
+  app.provider('myProv',   CarFunc );
+  app.controller('CarController', function($scope, myService, myFactory, myProv) {
+			$scope.service = "myService = " + myService;
+			$scope.factory = "myFactory = " + myFactory;
+			$scope.provider = "myProvider = " + myProv;
+  })
+    
+  app.service('CarService', function() {
+      this.dealer="Bad";
+      this.numCylinder = 4;
+  });
+  
+  app.factory('CarFactory', function() {
+      return function(numCylinder) {
+          this.dealer="Bad";
+          this.numCylinder = numCylinder;
+      };
+  });
+  
+  app.provider('Car', function() {
+      var dealerName = 'Bad';
+      this.$get = function() {
+          return function(numCylinder) {
+              this.numCylinder = numCylinder;
+              this.dealer = dealerName;
+          }
+      };
+      this.setDealerName = function(str) {
+        dealerName = str;
+      }  
+  });
+  
+  app.config(function(CarProvider) {
+    CarProvider.setDealerName('Good');
+  })
+
+  app.controller('MyCarController', function($scope, CarService, CarFactory, Car) {
+    $scope.service = CarService; 
+    $scope.factory = new CarFactory(6);
+    $scope.provider = new Car(6);
+  })  
+  
+  app.controller('YourCarController', function($scope, CarService, CarFactory, Car) {
+    $scope.service = CarService;
+    $scope.factory = new CarFactory(8);
+    $scope.provider = new Car(8);
+  })  
+
+  </script>
+    
+</head>
+<body ng-app="app">
+ 
+  <div ng-controller="AutoController">
+    CarFactory  kumar : {{factory}}  <br/>
+    speaker : {{factory.test}} <br/>
+    value1 : {{factory.speed}} <br/>
+    value2 : {{factory.speaker("yaasdf")}} <br/>
+    
+    value2 : {{factory1.speaker("yaasdf")}} <br/>
+  </div>
+
+  <br/>
+  <div ng-controller="CarController">
+    CarService.wheels : {{service}} <br/>
+    CarFactory.wheels : {{factory}}  <br/>
+    CarProvider.wheels : {{provider}} <br/>
+  </div>
+
+  <br/>
+  <div ng-controller="MyCarController">
+    CarService.wheels : {{service}} <br/>
+    CarFactory.wheels : {{factory}}  <br/>
+    CarProvider.wheels : {{provider}} <br/>
+  </div>
+
+  <br/>
+  <div ng-controller="MyCarController">
+    MyCarService.wheels : {{service.numCylinder}} {{service.dealer}}<br/>
+    MyCarFactory.wheels : {{factory.numCylinder}}  {{factory.dealer}}<br/>
+    MyCarProvider.wheels : {{provider.numCylinder}} {{provider.dealer}}<br/>
+  </div>
+  
+  <br/>
+  <div ng-controller="YourCarController">
+    CarService.wheels : {{service.numCylinder}}  {{service.dealer}}<br/>
+    CarFactory.wheels : {{factory.numCylinder}}  {{factory.dealer}}<br/>
+    CarProvider.wheels : {{provider.numCylinder}}  {{provider.dealer}}<br/>
+  </div>
+</body>
+</html>
+<!--
+output
+
+CarFactory kumar : {"name":"Kool","speed":500,"test":"Kumar"} 
+speaker : Kumar 
+value1 : 500 
+value2 : Auto name is 'Kool and speed is 'yaasdf 
+value2 : Auto name is 'msft and speed is 'yaasdf 
+
+CarService.wheels : myService = [object Object] 
+CarFactory.wheels : myFactory = ::Bad 
+CarProvider.wheels : myProvider = function (numCylinder) { this.numCylinder = numCylinder; this.dealer = dealerName; } 
+
+CarService.wheels : {"dealer":"Bad","numCylinder":4} 
+CarFactory.wheels : {"dealer":"Bad","numCylinder":6} 
+CarProvider.wheels : {"numCylinder":6,"dealer":"Good"} 
+
+CarService.wheels : 4 Bad
+CarFactory.wheels : 6 Bad
+CarProvider.wheels : 6 Good
+
+CarService.wheels : 4 Bad
+CarFactory.wheels : 8 Bad
+CarProvider.wheels : 8 Good
+-->
