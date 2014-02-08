@@ -1,0 +1,21 @@
+C:\Users\Kumar\AppData\Roaming\npm>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 9209-F549
+
+ Directory of C:\Users\Kumar\AppData\Roaming\npm
+
+12/29/2013  07:28 PM    <DIR>          .
+12/29/2013  07:28 PM    <DIR>          ..
+12/29/2013  07:28 PM               290 bower
+12/29/2013  07:28 PM               151 bower.cmd
+12/29/2013  07:27 PM               298 grunt
+12/29/2013  07:27 PM               159 grunt.cmd
+12/29/2013  07:28 PM               290 karma
+12/29/2013  07:28 PM               151 karma.cmd
+12/29/2013  07:28 PM    <DIR>          node_modules
+12/29/2013  07:28 PM               296 r.js
+12/29/2013  07:28 PM               157 r.js.cmd
+               8 File(s)          1,792 bytes
+               3 Dir(s)  397,276,536,832 bytes free
+               
+               
