@@ -63,3 +63,7 @@ C:\Users\Kumar\AppData\Roaming\npm\node_modules>dir
               14 Dir(s)  397,278,351,360 bytes free               
                
                
+**angular-seed**
+C:\project\web\ng\tut\angular-seed-master>node scripts/web-server.js
+Http Server running at http://localhost:8000/
+http://localhost:8000/app/index.html#/view1
