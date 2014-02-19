@@ -1,0 +1,33 @@
+<!-- egghead.io -->
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="utf-8">
+  <title>Egghead Videos</title>
+</head>
+<body>
+
+  <div id="container">
+    {{random}}
+  </div>
+
+  <div id="container2">
+    {{random}}
+  </div>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
+
+
+app.js
+======
+var app = angular.module("app", []);
+
+app.run(function($rootScope) {
+    $rootScope.random = Math.random()
+})
+
+angular.bootstrap(document.getElementById("container"), ["app"])
+angular.bootstrap(document.getElementById("container2"), ["app"])
