@@ -16,38 +16,46 @@ Directives
 
 Methods
 ------------------------------------------------------------------------------------------------------------------------
+angular.module('myModule', [dependentModule1, dependentModule2])
 
-constant(name, object<Constant value>);
+-sharing constant's & value's value across your app. 
+.constant(name, object<Constant value>);
   Because the constant are fixed, they get applied before other provide methods. See $provide.constant().
 
-provider(name, providerType<Construction function for creating new instance of the service>);
+-configurable;how the service will be provided even before the injection system is in place. 
+-This is achieved with configure call where we register work during the modules configuration phase.
+.provider(name, providerType<Construction function for creating new instance of the service>);
 
-factory(name, providerFunction<Function for creating new instance of the service>);
+-inject only constants & providers
+.config(configFn<Execute this function on module load. Useful for service configuration.>);
 
-service(name, constructor<A constructor function that will be instantiated>);
+-allows us to add some logic before creating the object we require.
+-allows us to pass the function, decide which factory then invokes and returns the result.
+.factory(name, providerFunction<Function for creating new instance of the service>);
 
-value(name, object<Service instance object>);
+-ready function that you need to share throughout the app without any “preprocessing”
+-expects to receive a constructor which it then invokes by using new and then returns a result
+.service(name, constructor<A constructor function that will be instantiated>);
 
-animation(name, animationFactory);
+.directive(name, directiveFactory<Factory function for creating new instance of directives>);
 
-filter(name, filterFactory<Factory function for creating new instance of filter>);
+//not available in config phase, value not set
+.value(name, object<Service instance object>);
 
-controller(name, constructor<Controller name, or an object map of controllers where the keys are the names and the values are the constructors>);
+.animation(name, animationFactory);
 
-directive(name, directiveFactory<Factory function for creating new instance of directives>);
+.filter(name, filterFactory<Factory function for creating new instance of filter>);
 
-config(configFn<Execute this function on module load. Useful for service configuration.>);
+.controller(name, constructor<Controller name, or an object map of controllers where the keys are the names and the values are the constructors>);
 
-run(initializationFn<Execute this function after injector creation. Useful for application initialization>);
+.run(initializationFn<Execute this function after injector creation. Useful for application initialization>);
 
 Properties
-requires<Holds the list of modules which the injector will load before the current module is loaded>
+.requires<Holds the list of modules which the injector will load before the current module is loaded>
 
 ------------------------------------------------------------------------------------------------------------------------
 
-
 Configuration blocks - get executed during the provider registrations and configuration phase. Only providers and constants can be injected into configuration blocks. This is to prevent accidental instantiation of services before they have been fully configured.
-
 Run blocks - get executed after the injector is created and are used to kickstart the application. Only instances and constants can be injected into run blocks. This is to prevent further system configuration during application run time.
-
 So you can't inject your own service, or built-in services like $http into config(). Use run() instead.
+=========================================================================================================================
