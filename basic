@@ -33,10 +33,12 @@ angular
 
 //allows us to add some logic before creating the object we require.
 //allows us to pass the function, decide which factory then invokes and returns the result.
+# retruns object {}
 .factory(name, providerFunction<Function for creating new instance of the service>);
 
 //ready function that you need to share throughout the app without any “preprocessing”
 //expects to receive a constructor which it then invokes by using new and then returns a result
+# retruns function()
 .service(name, constructor<A constructor function that will be instantiated>);
 
 .directive(name, directiveFactory<Factory function for creating new instance of directives>);
@@ -66,6 +68,7 @@ var starWarsApp = angular.module('starwars', []);
  
 starWarsApp.provider('Vader', function () {
   var darkSide = true;
+  //provider
   this.joinDarkSide = function(s){
     darkSide = s;
  }
