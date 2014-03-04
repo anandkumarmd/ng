@@ -16,7 +16,9 @@ Directives
 
 Methods
 ------------------------------------------------------------------------------------------------------------------------
-angular.module('myModule', [dependentModule1, dependentModule2])
+angular
+
+.module('myModule', [dependentModule1, dependentModule2])
 
 -sharing constant's & value's value across your app. 
 .constant(name, object<Constant value>);
