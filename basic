@@ -61,3 +61,47 @@ Configuration blocks - get executed during the provider registrations and config
 Run blocks - get executed after the injector is created and are used to kickstart the application. Only instances and constants can be injected into run blocks. This is to prevent further system configuration during application run time.
 So you can't inject your own service, or built-in services like $http into config(). Use run() instead.
 =========================================================================================================================
+//http://clevertech.biz/devblog/angularjs-factory-service-provider/
+var starWarsApp = angular.module('starwars', []);
+ 
+starWarsApp.provider('Vader', function () {
+  var darkSide = true;
+  this.joinDarkSide = function(s){
+    darkSide = s;
+ }
+ 
+ var VaderClass = function(padawan) {
+   this.name = padawan;
+   this.speak = function () {
+     return 'Join the dark side ' + this.name;
+   }
+ }
+ 
+ var AnakinClass = function(padawan) {
+   this.name = padawan;
+   this.speak = function () {
+     return 'The force is strong in our family ' + this.name;
+   }
+ }
+ 
+ this.$get = function() {
+   if (darkSide){
+     return VaderClass;
+   } else {
+     return AnakinClass;
+   }
+ };
+});
+ 
+starWarsApp.config(function(VaderProvider){
+  VaderProvider.joinDarkSide(false);
+});
+ 
+function StarWarsController( VaderProvider) {
+  var luke = new VaderProvider('Luke');
+  luke.speak();
+ 
+  var leila = new VaderProvider('Leila');
+  leila.speak();
+}
+----------------------------------------------------------------------------------
