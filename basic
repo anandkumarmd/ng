@@ -16,6 +16,7 @@ Directives
 
 Methods
 ------------------------------------------------------------------------------------------------------------------------
+
 constant(name, object<Constant value>);
   Because the constant are fixed, they get applied before other provide methods. See $provide.constant().
 
@@ -41,6 +42,7 @@ run(initializationFn<Execute this function after injector creation. Useful for a
 
 Properties
 requires<Holds the list of modules which the injector will load before the current module is loaded>
+
 ------------------------------------------------------------------------------------------------------------------------
 
 
