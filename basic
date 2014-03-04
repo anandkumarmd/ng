@@ -20,23 +20,23 @@ angular
 
 .module('myModule', [dependentModule1, dependentModule2])
 
--sharing constant's & value's value across your app. 
+//sharing constant's & value's value across your app. 
 .constant(name, object<Constant value>);
   Because the constant are fixed, they get applied before other provide methods. See $provide.constant().
 
--configurable;how the service will be provided even before the injection system is in place. 
--This is achieved with configure call where we register work during the modules configuration phase.
+//configurable;how the service will be provided even before the injection system is in place. 
+//This is achieved with configure call where we register work during the modules configuration phase.
 .provider(name, providerType<Construction function for creating new instance of the service>);
 
--inject only constants & providers
+//inject only constants & providers
 .config(configFn<Execute this function on module load. Useful for service configuration.>);
 
--allows us to add some logic before creating the object we require.
--allows us to pass the function, decide which factory then invokes and returns the result.
+//allows us to add some logic before creating the object we require.
+//allows us to pass the function, decide which factory then invokes and returns the result.
 .factory(name, providerFunction<Function for creating new instance of the service>);
 
--ready function that you need to share throughout the app without any “preprocessing”
--expects to receive a constructor which it then invokes by using new and then returns a result
+//ready function that you need to share throughout the app without any “preprocessing”
+//expects to receive a constructor which it then invokes by using new and then returns a result
 .service(name, constructor<A constructor function that will be instantiated>);
 
 .directive(name, directiveFactory<Factory function for creating new instance of directives>);
