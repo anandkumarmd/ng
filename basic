@@ -1,3 +1,48 @@
+---------------------------------------------------  
+| Type    | Singleton| Instantiable | Configurable|
+---------------------------------------------------  
+| Service | Yes      | No           | No          |
+---------------------------------------------------  
+| Factory | Yes      | Yes          | No          |
+---------------------------------------------------  
+| Provider| Yes      | Yes          | Yes         |       
+---------------------------------------------------  
+
+
+http://docs.angularjs.org/api/ng/type/angular.Module
+Methods
+Functions
+Directives
+
+Methods
+------------------------------------------------------------------------------------------------------------------------
+constant(name, object<Constant value>);
+  Because the constant are fixed, they get applied before other provide methods. See $provide.constant().
+
+provider(name, providerType<Construction function for creating new instance of the service>);
+
+factory(name, providerFunction<Function for creating new instance of the service>);
+
+service(name, constructor<A constructor function that will be instantiated>);
+
+value(name, object<Service instance object>);
+
+animation(name, animationFactory);
+
+filter(name, filterFactory<Factory function for creating new instance of filter>);
+
+controller(name, constructor<Controller name, or an object map of controllers where the keys are the names and the values are the constructors>);
+
+directive(name, directiveFactory<Factory function for creating new instance of directives>);
+
+config(configFn<Execute this function on module load. Useful for service configuration.>);
+
+run(initializationFn<Execute this function after injector creation. Useful for application initialization>);
+
+Properties
+requires<Holds the list of modules which the injector will load before the current module is loaded>
+------------------------------------------------------------------------------------------------------------------------
+
 
 Configuration blocks - get executed during the provider registrations and configuration phase. Only providers and constants can be injected into configuration blocks. This is to prevent accidental instantiation of services before they have been fully configured.
 
