@@ -1,0 +1,4 @@
+<div ng-include src="'views/sidepanel.html'"></div>
+
+any string in ng tags is in fact evaluated as an angular expression. 
+" tells angular it that it's a string expression.
