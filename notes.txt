@@ -5,6 +5,9 @@ http://plnkr.co/edit/Yvd73HiFS8dXvpvpEeFu?p=preview
 
 ng-include::
 ==========
+[[any string in ng tags is in fact evaluated as an angular expression.]]
+" tells angular it that it's a string expression.
+
 --"expression" in ng-include 
 http://plnkr.co/edit/Yvd73HiFS8dXvpvpEeFu?p=preview
 <tr ng-repeat="row in rows" ng-include="row.enabled && row.name + '.html'"></tr>
