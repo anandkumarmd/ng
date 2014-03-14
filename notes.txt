@@ -6,3 +6,23 @@ any string in ng tags is in fact evaluated as an angular expression.
 //http://stackoverflow.com/questions/12521905/angularjs-ng-include-does-not-include-view-unless-passed-in-scope
 ng-include accepts an expression. 
 If you want to specify the explicit url directly in there, you have to give a string.
+
+```````````````````````````````````````````
+@Override::
+=========
+What I think is happening: 
+The template is attached to the parent controller before the controller on that element is initiated, 
+creating a sibling relationship instead of child-parent.
+
+As you can see the change was to raise ngInclude's priority from 0 to 1000, athough more recently it was lowered to 400. 
+In any case this is higher than the default of 0, which is ngController's priority.
+This explains why increasing ngController's priority to 1000 fixes the issue. 
+I believe that this is the right solution but the question is what is the best priority for ngController?
+
+To monkey patch this in the mean time I've decorated ngController to change the priority:
+$provide.decorator('ngControllerDirective', ['$delegate', function($delegate) {
+    $delegate[0].priority = 900;
+    return $delegate;
+}]);
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
