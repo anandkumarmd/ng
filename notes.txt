@@ -1,3 +1,7 @@
+ng-include::
+==========
+http://docs.angularjs.org/api/ng/directive/ngInclude as 1.directive, 2.attribute, 3.css.
+
 <div ng-include src="'views/sidepanel.html'"></div>
 
 any string in ng tags is in fact evaluated as an angular expression. 
@@ -7,6 +11,21 @@ any string in ng tags is in fact evaluated as an angular expression.
 ng-include accepts an expression. 
 If you want to specify the explicit url directly in there, you have to give a string.
 
+```````````````````````````````````````````
+
+<div ng-repeat="item in items" ng-include="'views/template.html'"></div>
+OR
+# # html:
+<div ng-repeat="item in items">
+   <my-include></my-include>
+</div>
+# # js:
+angular.module("app").directive("myInclude", function() {
+return {
+    restrict: "E",
+    templateUrl: "/views/template.html"
+}
+})
 ```````````````````````````````````````````
 @Override::
 =========
