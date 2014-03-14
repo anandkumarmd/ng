@@ -46,9 +46,9 @@ return {
 ngModel::
 =========
 //one direction
-   {{object.operation()}} 
+   {{user.name}}    {{object.operation()}} 
 //bi directiona
-   ngModel
+   <input type="text" name="input" ng-model="user.name" ng-pattern="word" required ng-trim="false">
    
    
 
