@@ -1,7 +1,15 @@
+ng-init:
+http://plnkr.co/edit/Yvd73HiFS8dXvpvpEeFu?p=preview
+<body ng-init="rows = [{name: 'row1'}, {name: 'row2'}, {name: 'row3'}, {name: 'row4'}]">
+
 ng-include::
 ==========
-http://docs.angularjs.org/api/ng/directive/ngInclude as 1.directive, 2.attribute, 3.css.
+"expression" in ng-include 
+http://plnkr.co/edit/Yvd73HiFS8dXvpvpEeFu?p=preview
+<tr ng-repeat="row in rows" ng-include="row.enabled && row.name + '.html'"></tr>
 
+"'string'" in ng-include 
+http://docs.angularjs.org/api/ng/directive/ngInclude as 1.directive, 2.attribute, 3.css.
 <div ng-include src="'views/sidepanel.html'"></div>
 
 any string in ng tags is in fact evaluated as an angular expression. 
