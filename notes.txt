@@ -17,7 +17,7 @@ CORRECT: <div ng-include="workspace.TemplateUrl"></div>
 http://docs.angularjs.org/api/ng/directive/ngInclude as 1.directive, 2.attribute, 3.css.
 <div ng-include src="'views/sidepanel.html'"></div>
 
-any string in ng tags is in fact evaluated as an angular expression. 
+[[any string in ng tags is in fact evaluated as an angular expression.]]
 " tells angular it that it's a string expression.
 
 //http://stackoverflow.com/questions/12521905/angularjs-ng-include-does-not-include-view-unless-passed-in-scope
