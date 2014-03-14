@@ -5,15 +5,15 @@ http://plnkr.co/edit/Yvd73HiFS8dXvpvpEeFu?p=preview
 
 ng-include::
 ==========
-  "expression" in ng-include 
+--"expression" in ng-include 
 http://plnkr.co/edit/Yvd73HiFS8dXvpvpEeFu?p=preview
 <tr ng-repeat="row in rows" ng-include="row.enabled && row.name + '.html'"></tr>
 
-  "statement/expression" ng statement.
+--"statement/expression" ng statement.
 WRONG: <div ng-include="{{workspace.TemplateUrl}}"></div>
 CORRECT: <div ng-include="workspace.TemplateUrl"></div>
 
-  "'string'" in ng-include 
+--"'string'" in ng-include 
 http://docs.angularjs.org/api/ng/directive/ngInclude as 1.directive, 2.attribute, 3.css.
 <div ng-include src="'views/sidepanel.html'"></div>
 
