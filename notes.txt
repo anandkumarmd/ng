@@ -43,6 +43,17 @@ return {
 }
 })
 ```````````````````````````````````````````
+ngModel::
+=========
+//one direction
+   {{object.operation()}} 
+//bi directiona
+   ngModel
+   
+   
+
+
+```````````````````````````````````````````
 @Override::
 =========
 What I think is happening: 
