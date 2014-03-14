@@ -2,3 +2,7 @@
 
 any string in ng tags is in fact evaluated as an angular expression. 
 " tells angular it that it's a string expression.
+
+//http://stackoverflow.com/questions/12521905/angularjs-ng-include-does-not-include-view-unless-passed-in-scope
+ng-include accepts an expression. 
+If you want to specify the explicit url directly in there, you have to give a string.
