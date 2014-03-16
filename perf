@@ -1,0 +1,5 @@
+http://stackoverflow.com/questions/16114946/ways-to-improve-angularjs-performance-even-with-large-number-of-dom-elements?rq=1
+
+ every time the listener function gets fired, 
+ an ng.$apply() gets executed which runs the $diggest and walks over all watches and bindings.
+ 
