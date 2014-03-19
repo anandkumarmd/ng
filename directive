@@ -29,9 +29,10 @@ You usually don’t have to call $apply() yourself, because directives like ngCl
 However, if you’re writing your own event handler, like the swipeLeft and swipeRight directives from my guide to directives, 
 you need to plug $apply() into your event handler.
 
-3.digest()  [most important one. With high probability, you will never actually call $digest() directly, since $apply() does that for you]
+3.digest()  
 $digest() runs through every watcher in the scope, evaluates the expression, and checks if the value of the expression has changed.
 If the value has changed, AngularJS calls the change callback with the new value and the old value.
+[most important one. With high probability, you will never actually call $digest() directly, since $apply() does that for you]
 AngularJS scopes are organized in a tree structure and a scope can access its ancestor’s variables.
 each iteration of the $digest() loop does a depth-first search and performs the watcher check on every child scope. 
 If any child scope is dirty, the loop has to run again!
