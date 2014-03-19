@@ -1,5 +1,6 @@
- Things get much easier in Angular if you focus on data and state instead of events.
- 
+Things get much easier in Angular if you focus on data && state, !events.
+## DRY ## don't repeat yourself
+
 directive for element/attribute/event (http://seanhess.github.io/2013/10/14/angularjs-directive-design.html)
 app.element('button', ...
 app.attribute('toggle', ...
