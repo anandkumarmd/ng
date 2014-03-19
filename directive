@@ -51,6 +51,21 @@ $scope.$$watchers (list of watchers (expression, callback)
 This function takes an expression and a callback: the callback will be called when the value of the expression changes.
 Under the hood, each scope has a list of watchers, internally called $scope.$$watchers, which contain the expression and the callback function. 
 The $watch simply adds a new watcher to the $$watchers array, which AngularJS loops over when it thinks something that can change the state of the scope.  
+
+  Unbinding $watch() Listeners In AngularJS (http://www.bennadel.com/blog/2480-Unbinding-watch-Listeners-In-AngularJS.htm)
+When you invoke the $watch() method, to create a binding, AngularJS returns a "deregistration" function. 
+This function can then be used to unbind your $watch() listener - all you have to do is invoke this returned function and
+your $watch() listener will be removed.
+
+var unbindWatcher = 
+    $scope.$watch("clickCount", function( newClickCount ) {
+         console.log( "Watching click count." );
+         if ( newClickCount >= 5 ) {
+             $scope.isShowingFeedback = true;
+             // Once the feedback has been displayed, there's no more need to watch the change in the model value.
+           unbindWatcher();
+         }
+     }
   
 2.$apply() 
 onchange in expression, ng runs through its watchers, calls callback func.
