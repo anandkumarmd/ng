@@ -1,9 +1,37 @@
 Things get much easier in Angular if you focus on data && state, !events.
+
+
+!!!!!--------------------------------------------------------------------------------------------
+When you run code inside an AngularJS Controller or Service object, you never have to worry about calling $apply() since your code is executing inside of an AngularJS "context." 
+By this, I mean that AngularJS is aware that your code is running and will perform a dirty-check after the code has completed. 
+When you're inside a Directive, however, AngularJS' view of the world is a bit more limited; 
+it is the job of the Directive to call $apply() (or trigger $apply with something like $timeout) when AngularJS needs to be told about changes to the View Model (ie. $scope). 
+Knowing when to do this, however, is a little tricky because some aspects of the Directive are actually executing inside of an AngularJS context.
+
+you have to tell AngularJS about all changes to the $scope that occurred inside of the Directive
+
+there are aspets of the Directive that AngularJS is already monitoring. Specifically, AngularJS already knows about:
+
+The link functions.
+The attribute $observe() handlers.
+The $scope $watch() handlers.
+
+If you make changes to the $scope inside the synchronous execution of the link function, or the asynchronous execution of the $observe() and $watch() handlers, 
+you're already executing inside of an AngularJS context. 
+This means that AngularJS will perform a dirty-check after your code has run. 
+And, AngularJS will trigger additional $digest life-cycles if necessary.
+----------------------------------------------------------------------------------------------
+
+
 ## DRY ## don't repeat yourself
 Directives are already hard, keep them simple. Don’t ping the server or reformat underlying data.
 directive should either take data in as 
 1.an attribute through scope.$eval 
 2.and/or have a controller to handle acquiring and storing the data.
+
+jquery with ng
+http://thecodebarbarian.wordpress.com/2013/09/23/the-8020-guide-to-writing-angularjs-directives/comment-page-1/
+
 
 directive for element/attribute/event (http://seanhess.github.io/2013/10/14/angularjs-directive-design.html)
 app.element('button', ...
@@ -37,7 +65,9 @@ AngularJS scopes are organized in a tree structure and a scope can access its an
 each iteration of the $digest() loop does a depth-first search and performs the watcher check on every child scope. 
 If any child scope is dirty, the loop has to run again!
 
-
+//http://stackoverflow.com/questions/14876112/difference-between-observers-and-watchers
+$observe() => change in html attribute value 
+is a method on the Attributes object, and as such, it can only be used to observe/watch the value change of a DOM attribute.
 
 
 $apply => function that notifies AngularJS when some event has happened, that may require updating the view.
