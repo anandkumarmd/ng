@@ -1,6 +1,6 @@
 Things get much easier in Angular if you focus on data && state, !events.
 
-
+$scope = view model for DOM.
 !!!!!--------------------------------------------------------------------------------------------
 http://www.bennadel.com/blog/2449-Directive-Link-observe-And-watch-Functions-Execute-Inside-An-AngularJS-Context.htm
 
@@ -22,6 +22,20 @@ If you make changes to the $scope inside the synchronous execution of the link f
 you're already executing inside of an AngularJS context. 
 This means that AngularJS will perform a dirty-check after your code has run. 
 And, AngularJS will trigger additional $digest life-cycles if necessary.
+
+::LIVE UPDATE
+
+perfomance (on dom create, in link)
+http://www.bennadel.com/blog/2443-Rendering-DOM-Elements-With-ngRepeat-In-AngularJS.htm
+
+hashcopy
+http://www.bennadel.com/blog/2472-HashKeyCopier-An-AngularJS-Utility-Class-For-Merging-Cached-And-Live-Data.htm
+If a DOM node is re-created, all of the directives attached to that entire descendant DOM tree will be $destroy'd and then re-linked.
+JavaScript operations are super fast. DOM (Document Object Model) operations are, by comparison, much slower.
+created an AngularJS utility class - HashKeyCopier. 
+This class exposes one "static" method that will recurse through two objects, 
+copying the $$hashKey entries form the source object over to the destination object:
+
 ----------------------------------------------------------------------------------------------
 
 
