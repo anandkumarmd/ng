@@ -1,8 +1,49 @@
 Things get much easier in Angular if you focus on data && state, !events.
 ## DRY ## don't repeat yourself
+Directives are already hard, keep them simple. Don’t ping the server or reformat underlying data.
+directive should either take data in as 
+1.an attribute through scope.$eval 
+2.and/or have a controller to handle acquiring and storing the data.
 
 directive for element/attribute/event (http://seanhess.github.io/2013/10/14/angularjs-directive-design.html)
 app.element('button', ...
 app.attribute('toggle', ...
 app.event('scroll', ...
 
+DATA BINDING => set of functions associated with a scope
+SCOPE (TREE) => execution context for the expressions you write in your HTML.
+                contains a set of named variables and is organized in a TREE structure, 
+                so expressions in a given scope can access variables from an ancestor scope in the tree.
+data binding adds 3 powerful functions to a scope that enable you to assign an event handler to fire when a variable in scope changes.                
+
+1.$watch() 
+$scope.$$watchers (list of watchers (expression, callback)
+This function takes an expression and a callback: the callback will be called when the value of the expression changes.
+Under the hood, each scope has a list of watchers, internally called $scope.$$watchers, which contain the expression and the callback function. 
+The $watch simply adds a new watcher to the $$watchers array, which AngularJS loops over when it thinks something that can change the state of the scope.  
+  
+2.$apply() 
+onchange in expression, ng runs through its watchers, calls callback func.
+When called without arguments, $apply lets AngularJS know that something happened that may have changed the state of the scope, so AngularJS knows to run through its watchers. 
+You usually don’t have to call $apply() yourself, because directives like ngClick do it for you. 
+However, if you’re writing your own event handler, like the swipeLeft and swipeRight directives from my guide to directives, 
+you need to plug $apply() into your event handler.
+
+3.digest()  [most important one. With high probability, you will never actually call $digest() directly, since $apply() does that for you]
+$digest() runs through every watcher in the scope, evaluates the expression, and checks if the value of the expression has changed.
+If the value has changed, AngularJS calls the change callback with the new value and the old value.
+AngularJS scopes are organized in a tree structure and a scope can access its ancestor’s variables.
+each iteration of the $digest() loop does a depth-first search and performs the watcher check on every child scope. 
+If any child scope is dirty, the loop has to run again!
+
+
+
+
+$apply => function that notifies AngularJS when some event has happened, that may require updating the view.
+$eval => ? which does a safe eval on its parameter in the scope.
+$compile =>
+$watch =>
+
+@ load (preLint,postLink,compile,etc,...) http://docs.angularjs.org/guide/directive
+AngularJS lets you do different things with your directive at different steps of its internal processing, 
+providing options like preLink, postLink, compile, etc.
