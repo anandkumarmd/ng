@@ -1,1 +1,28 @@
  ng-transclude
+ 
+------$parse vs $interpolate vs $compile services?--------------------------- 
+//http://stackoverflow.com/questions/17900588/what-is-the-difference-between-the-parse-interpolate-and-compile-services
+
+Those are all examples of services that aid in AngularJS view rendering (although $parse and $interpolate could be used outside of this domain. To illustrate what is the role of each service let's take example of this piece of HTML:
+
+var imgHtml = '<img ng-src="/path/{{name}}.{{extension}}">'
+
+and values on the scope:
+
+$scope.name = 'image';
+$scope.extension = 'jpg';
+
+Given this markup here is what each service brings to the table:
+
+    $compile - it can take the whole markup and turn it linking function that, when executed against a certain scope will turn a piece of HTML text into dynamic, live DOM with all the directives (here: ng-src) reacting to model changes. One would invoke it as follows: $compile(imgHtml)($scope) and would get DOM element with all the DOM event bounds as a result. $compile is making us of $interoplate (among other things) to do its job.
+    $interpolate knows how to process a string with embedded interpolation expressions, ex.: /path/{{name}}.{{extension}}. In other words it can take a string with interpolation expressions, a scope and turn it into the resulting text. One can think of the $interpolation service as of very simple, string-based template language. Given the above example one would use this service like: $interpolate("/path/{{name}}.{{extension}}")($scope) to get the path/image.jpg string as a result.
+    $parse is used by $interpolate to evaluate individual expressions (name, extension) against a scope. It can be used to both read and set values for a give expression. For example, to evaluate the name expression one would do: $parse('name')($scope) to get the "image" value. To set the value one would do: `$parse('name').assign($scope, 'image2')
+
+All those services are working together to provide live UI in AngularJS. But they operate on different level:
+
+    $parse is concerned with individual expressions only (name, extension). It is read-write service.
+    $interpolate is read only and is concerned with string containing multiple expressions (/path/{{name}}.{{extension}})
+    $compile is at the hart of AngularJS machinery and can turn HTML strings (with directives and interpolation expressions) into live DOM.
+---------------------------------------------------------------------------------    
+
+
