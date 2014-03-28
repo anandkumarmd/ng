@@ -4,8 +4,10 @@ $scope = view model for DOM.
 !!!!!--------------------------------------------------------------------------------------------
 
 
-Injecting, Compiling, & Linking
+Injecting, Compiling, & Linking https://github.com/angular/angular.js/wiki/Understanding-Directives
 ===============================
+
+
 How Directives are Compiled
 
 When the application bootstraps, Angular starts parsing the DOM using the $compile service. 
@@ -21,6 +23,7 @@ After the compile phase is over the linking phase, where the collected link func
 This is where the templates produced by the directives are evaluated against correct scope and are turned into live DOM which react to events!
 
 
+//http://www.sitepoint.com/practical-guide-angularjs-directives-part-two/
 app.directive('helloWorld', function() {//2nd argument is a function which returns a directive definition object. 
   return {
     restrict: 'AE', (attribute, eleemnt, class, comment)
@@ -39,6 +42,17 @@ app.directive('helloWorld', function() {//2nd argument is a function which retur
           link >> elem.bind('mouseover',function(){scope.$apply(function(){scope.color=scope.changeColor();});
       ]
     }
+    //transclude:'element' and transclude:true
+    ng-transclude says where to put the transcluded content. 
+    In this case the DOM content <p>Hello {{name}}</p> is extracted and put inside <div ng-transclude></div>
+    template: '<div ng-transclude></div>'
+    
+    controller: function($scope, $compile, $http) {this.addChild = function(nestedDirective) {};}
+    //controller & require (need outer directive controller)
+    require: '^outerDirective',
+    link: function(scope, elem, attrs, controllerInstance) {controllerInstance.addChild(scope);}//4th args is controller instance you require
+    
+    
     template: '<p style="background-color:{{color}}">Hello World',
     //compile:(returns link)//perform any DOM transformation before the link function runs; accepts 2 arguments(ele, attr).
     link: function(scope, elem, attrs) {//default a directive gets the parent’s scope. 
