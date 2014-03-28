@@ -2,6 +2,38 @@ Things get much easier in Angular if you focus on data && state, !events.
 
 $scope = view model for DOM.
 !!!!!--------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------
 http://www.bennadel.com/blog/2449-Directive-Link-observe-And-watch-Functions-Execute-Inside-An-AngularJS-Context.htm
 
 When you run code inside an AngularJS Controller or Service object, you never have to worry about calling $apply() since your code is executing inside of an AngularJS "context." 
