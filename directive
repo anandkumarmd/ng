@@ -21,6 +21,39 @@ After the compile phase is over the linking phase, where the collected link func
 This is where the templates produced by the directives are evaluated against correct scope and are turned into live DOM which react to events!
 
 
+app.directive('helloWorld', function() {//2nd argument is a function which returns a directive definition object. 
+  return {
+    restrict: 'AE', (attribute, eleemnt, class, comment)
+    replace: true,  (true => replace element/false)
+    //#Parent Scope[scope:false] vs. #Child Scope[scope:true] vs. #Isolated Scope[scope:{}]
+    scope: {//isoloated
+      //one-way binding (string); parent scope property changes, your isolated scope model also changes. only pass strings to the attribute  
+      color: '@colorAttr'// => attribute color-attr (isolated scope property == the attribute name, use only '@')
+      //two-way binding (object);
+      color: '='
+      //excute funtions on parent scope
+      changeColor:'&' [
+          parentController >> $scope.change=function(){ return $scope.colors[Math.floor((Math.random()*3))];}
+          link >> elem.bind('mouseover',function(){scope.$apply(function(){scope.color=scope.changeColor();});
+      ]
+      
+      
+    }
+    template: '<p style="background-color:{{color}}">Hello World',
+    //compile:(returns link)//perform any DOM transformation before the link function runs; accepts 2 arguments(ele, attr).
+    link: function(scope, elem, attrs) {//default a directive gets the parent’s scope. 
+      elem.bind('click', function() {
+        elem.css('background-color', 'white');
+        scope.$apply(function() {
+          scope.color = "white";
+        });
+      });
+      elem.bind('mouseover', function() {
+        elem.css('cursor', 'pointer');
+      });
+    }
+  };
+});
 
 
 
