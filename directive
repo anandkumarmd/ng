@@ -4,7 +4,21 @@ $scope = view model for DOM.
 !!!!!--------------------------------------------------------------------------------------------
 
 
+Injecting, Compiling, & Linking
+===============================
+How Directives are Compiled
 
+When the application bootstraps, Angular starts parsing the DOM using the $compile service. 
+This service searches for directives in the markup and matches them against registered directives. 
+Once all the directives have been identified, Angular executes their compile functions. 
+As previously mentioned, the compile function returns a link function which is added to the list of link functions to be executed later. 
+This is called the compile phase. 
+
+If a directive needs to be cloned multiple times (e.g. ng-repeat), we get a performance benefit as the compile function runs once for the cloned template, 
+but the link function runs for each cloned instance. That’s why the compile function does not receive a scope.
+
+After the compile phase is over the linking phase, where the collected link functions are executed one by one, starts. 
+This is where the templates produced by the directives are evaluated against correct scope and are turned into live DOM which react to events!
 
 
 
