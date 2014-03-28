@@ -26,6 +26,7 @@ app.directive('helloWorld', function() {//2nd argument is a function which retur
     restrict: 'AE', (attribute, eleemnt, class, comment)
     replace: true,  (true => replace element/false)
     //#Parent Scope[scope:false] vs. #Child Scope[scope:true] vs. #Isolated Scope[scope:{}]
+      <hello-world color="color" change-color='change()'/>
     scope: {//isoloated
       //one-way binding (string); parent scope property changes, your isolated scope model also changes. only pass strings to the attribute  
       color: '@colorAttr'// => attribute color-attr (isolated scope property == the attribute name, use only '@')
@@ -33,11 +34,10 @@ app.directive('helloWorld', function() {//2nd argument is a function which retur
       color: '='
       //excute funtions on parent scope
       changeColor:'&' [
+          <hello-world color="color" change-color='change()'/>
           parentController >> $scope.change=function(){ return $scope.colors[Math.floor((Math.random()*3))];}
           link >> elem.bind('mouseover',function(){scope.$apply(function(){scope.color=scope.changeColor();});
       ]
-      
-      
     }
     template: '<p style="background-color:{{color}}">Hello World',
     //compile:(returns link)//perform any DOM transformation before the link function runs; accepts 2 arguments(ele, attr).
