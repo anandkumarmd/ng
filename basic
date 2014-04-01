@@ -1,3 +1,14 @@
+http://stackoverflow.com/questions/18142008/angularjs-pass-data-between-controllers
+Application
+Router
+Service/Factory/Provider
+Controller
+View
+Directive
+
+
+
+
 ---------------------------------------------------  
 | Type    | Singleton| Instantiable | Configurable|
 ---------------------------------------------------  
