@@ -1,0 +1,18 @@
+//BACK BUTTON::
+app.directive('backButton', function(){
+    return {
+      restrict: 'A',
+
+      link: function(scope, element, attrs) {
+        element.bind('click', function () {
+          history.back();
+          scope.$apply();
+        }
+      });
+    }
+});
+
+//then just use it like this:
+<a href back-button>back</a>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
