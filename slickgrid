@@ -1,11 +1,28 @@
 http://stackoverflow.com/questions/12128680/slickgrid-what-is-a-data-view?rq=1
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Grid
   ----
 DataView
   ----
   Data
   
+At the bottom you have the raw data. This is just a plain old array. 
+Each item in the array represents one row of data (to be displayed as one row in the grid).
+
+The DataView reads the data array and makes it available to the grid by exposing a couple of standard methods. 
+This way, when the grid wants to get data for display purposes, 
+it just talks to the dataview via one of the standard methods.
+
+The Grid is the display component. 
+Its only responsibility is to render the HTML code necessary to display the desired output on the screen.
+
+The grid never accesses the data directly. It only ever talks to the dataview. 
+This allows the dataview to perform tricks when returning the data to the grid, 
+such as delivering "phantom" rows used to represent group headings.
+
+If you're interested, the example below is just about the simplest example you can come up with that uses a 
+dataview with SlickGrid.  
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 var data = [
