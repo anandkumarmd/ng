@@ -4,6 +4,33 @@ $scope = view model for DOM.
 !!!!!--------------------------------------------------------------------------------------------
 
 
+DYNAMICALLY ADDING DIRECTIVES:
+==============================
+http://stackoverflow.com/questions/22192284/angularjs-add-directive-from-within-controller
+app.directive('copyExpenditure', function(){
+          return {
+            restrict: 'A',
+            scope: true,
+            template: '<button ng-click="copyExpenditure()">click me</button>'
+          }
+});
+
+on ngClick calls 
+var LinkFormatter = function (row, cell, value, columnDef, dataContext) {
+    var tag = '<div copy-expenditure></div>';
+    return tag;
+}
+( ? getting html but not as directive ? )
+-->>
+1. $compile(angular.element('<div copy-expenditure></div>'))($scope);
+
+and if you have some values passed into it from scope, you do this after compile:
+
+2. $scope.$digest();
+
+
+
+
 Injecting, Compiling, & Linking https://github.com/angular/angular.js/wiki/Understanding-Directives
 ===============================
 
