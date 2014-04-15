@@ -1,0 +1,40 @@
+http://stackoverflow.com/questions/12128680/slickgrid-what-is-a-data-view?rq=1
+
+Grid
+  ----
+DataView
+  ----
+  Data
+  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+var data = [
+  { title: "Primer",       rating: "A" },
+  { title: "Matrix",       rating: "B" },
+  { title: "Transformers", rating: "C" },
+];
+var columns = [
+  { id: "title",  name: "Title",  field: "title" },
+  { id: "rating", name: "Rating", field: "rating" }
+];
+var options = {
+  enableColumnReorder: false  // ... whatever grid options you need
+};
+
+var dataView = new Slick.Data.DataView();
+var grid = new Slick.Grid("#myGrid", dataView, columns, options);
+
+// wire up model events to drive the grid
+dataView.onRowCountChanged.subscribe(function (e, args) {
+  grid.updateRowCount();
+  grid.render();
+});
+dataView.onRowsChanged.subscribe(function (e, args) {
+  grid.invalidateRows(args.rows);
+  grid.render();
+});
+
+// Feed the data into the dataview
+dataView.setItems(data);
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
