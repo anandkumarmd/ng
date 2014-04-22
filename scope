@@ -20,4 +20,43 @@ http://umur.io/angularjs-directives-using-isolated-scope-with-attributes/
 4.transcluded scope -- directive with transclude: true. 
 This one is also normal prototypal scope inheritance, but it is also a sibling of any isolate scope.
 
+-----------------------------------------------------------------------------------------------------
+http://jasonmore.net/angular-js-directives-difference-controller-link/
+
+when do I want my code to run?”
+
+Before compilation? – Controller
+After compilation? – Link
+
+parent (compile)
+..child 1 (compile)
+....child 1 a (compile)
+....child 1 b (compile)
+..child 2 (compile)
+....child 2 a (compile)
+....child 2 b (compile)
+parent (controller)
+parent (pre-link)
+..child 1 (controller)
+..child 1 (pre-link)
+....child 1 a (controller)
+....child 1 a (pre-link)
+....child 1 a (post-link)
+....child 1 b (controller)
+....child 1 b (pre-link)
+....child 1 b (post-link)
+..child 1 (post-link)
+..child 2 (controller)
+..child 2 (pre-link)
+....child 2 a (controller)
+....child 2 a (pre-link)
+....child 2 a (post-link)
+....child 2 b (controller)
+....child 2 b (pre-link)
+....child 2 b (post-link)
+..child 2 (post-link)
+parent (post-link)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
