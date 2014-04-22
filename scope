@@ -1,0 +1,20 @@
+
+4 types of scopes:
+
+1.normal prototypal scope inheritance -- 
+ng-include, ng-switch, ng-controller, directive with scope: true
+
+2.normal prototypal scope inheritance with a [ copy/assignment ] -- 
+Each iteration of ng-repeat creates a new child scope, and that new child scope always gets a new property.
+ng-repeat. 
+
+3.isolate scope -- directive with scope: {...}. 
+This one is not prototypal, but '=', '@', and '&' provide a mechanism to access parent scope properties, via attributes.
+Text Binding (Prefix: @)
+One-way Binding (Prefix: &)
+Two-way Binding (Prefix: =)
+
+4.transcluded scope -- directive with transclude: true. 
+This one is also normal prototypal scope inheritance, but it is also a sibling of any isolate scope.
+
+
