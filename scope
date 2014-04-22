@@ -1,18 +1,21 @@
+ 4 types of scopes:
 
-4 types of scopes:
+http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs/14049482#14049482
+https://github.com/angular/angular.js/wiki/Understanding-Scopes
 
 1.normal prototypal scope inheritance -- 
-ng-include, ng-switch, ng-controller, directive with scope: true
+-ng-include, ng-switch, ng-controller, directive with scope: true
 
 2.normal prototypal scope inheritance with a [ copy/assignment ] -- 
 Each iteration of ng-repeat creates a new child scope, and that new child scope always gets a new property.
-ng-repeat. 
+-ng-repeat. 
 
 3.isolate scope -- directive with scope: {...}. 
 This one is not prototypal, but '=', '@', and '&' provide a mechanism to access parent scope properties, via attributes.
-Text Binding (Prefix: @)
-One-way Binding (Prefix: &)
-Two-way Binding (Prefix: =)
+http://umur.io/angularjs-directives-using-isolated-scope-with-attributes/
+-Text Binding (Prefix: @)
+-One-way Binding (Prefix: &)
+-Two-way Binding (Prefix: =)
 
 4.transcluded scope -- directive with transclude: true. 
 This one is also normal prototypal scope inheritance, but it is also a sibling of any isolate scope.
