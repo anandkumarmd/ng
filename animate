@@ -1,0 +1,46 @@
+http://www.johnpapa.net/preparing-for-animations-in-angular-1-2-0/
+
+ngRepeat        enter, leave and move
+ngView          enter and leave
+ngInclude       enter and leave
+ngSwitch        enter and leave
+ngIf            enter and leave
+ngClass         add and remove
+ngShow & ngHide add and remove (the ng-hide class value)
+-------------------------------------------------------------------------------------------------------------
+
+http://stackoverflow.com/questions/7792652/what-is-the-best-way-to-conditionally-apply-a-class-with-angularjs
+http://jsfiddle.net/rur_d/tNZAm/
+<div ng:controller="MyControl">
+    <ul>
+        <li ng:class="getClass($index)" ng:repeat="value in values" >{{value}}<button ng:click="toggleSelect($index)">{{getButtonLabel($index)}}</button></li>
+    </ul>
+    <p>Selected: {{selectedIndex}}</p>
+</div>
+function MyControl(){
+    var self = this;
+    self.values = ["a","b","c","d","e","f"];
+    self.selectedIndex = -1;
+    self.toggleSelect = function(ind){
+        if( ind === self.selectedIndex ){
+            self.selectedIndex = -1;
+        } else{
+            self.selectedIndex = ind;
+        }
+    }
+    self.getClass = function(ind){
+        if( ind === self.selectedIndex ){
+            return "selected";
+        } else{
+            return "";
+        }
+    }
+    self.getButtonLabel = function(ind){
+        if( ind === self.selectedIndex ){
+            return "Deselect";
+        } else{
+            return "Select";
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------------
