@@ -7,6 +7,8 @@ ngSwitch        enter and leave
 ngIf            enter and leave
 ngClass         add and remove
 ngShow & ngHide add and remove (the ng-hide class value)
+
+http://plnkr.co/edit/b1hoRXBreMMi6zIuQXr2?p=preview
 -------------------------------------------------------------------------------------------------------------
 
 http://stackoverflow.com/questions/7792652/what-is-the-best-way-to-conditionally-apply-a-class-with-angularjs
