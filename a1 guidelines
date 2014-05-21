@@ -1,4 +1,5 @@
 https://github.com/mgechev/angularjs-style-guide
+http://www.johnpapa.net/angular-app-structuring-guidelines/
 
 Optimize the digest cycle
 -Watch only the most vital variables (for example: when using real-time communication, 
