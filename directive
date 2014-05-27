@@ -108,7 +108,8 @@ app.directive('helloWorld', function() {//2nd argument is a function which retur
 
 
 
-
+http://jsfiddle.net/puatj/
+ng-template
 
 
 
