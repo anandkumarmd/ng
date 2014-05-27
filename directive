@@ -54,7 +54,22 @@ This is where the templates produced by the directives are evaluated against cor
 app.directive('helloWorld', function() {//2nd argument is a function which returns a directive definition object. 
   return {
     restrict: 'AE', (attribute, eleemnt, class, comment)
-    replace: true,  (true => replace element/false)
+    template: '<p style="background-color:{{color}}">Hello World',
+          //http://stackoverflow.com/questions/15285635/how-to-use-replace-of-directive-definition
+          //w/ replace=true => replace the current element with the contents of the HTML. 
+          //The replacement process migrates all of the attributes / classes from the old element to the new one.
+    replace: true =>  
+                    1.content of the directive's 'template' will replace the element that the directive is declared
+                    2.migrates all of the attributes / classes from the old/directive's element to the new one.)
+           : false => create a child element (simple)          
+    transclude: false/true/element (
+    //transclude:'element' and transclude:true
+    //http://stackoverflow.com/questions/15285635/how-to-use-replace-of-directive-definition
+    //http://plnkr.co/edit/k9qSx15fhSZRMwgAIMP4?p=preview
+    ng-transclude says where to put the transcluded content. 
+    In this case the DOM content <p>Hello {{name}}</p> is extracted and put inside <div ng-transclude></div>
+    template: '<div ng-transclude></div>'
+    
     //#Parent Scope[scope:false] vs. #Child Scope[scope:true] vs. #Isolated Scope[scope:{}]
       <hello-world color="color" change-color='change()'/>
     scope: {//isoloated
@@ -69,18 +84,12 @@ app.directive('helloWorld', function() {//2nd argument is a function which retur
           link >> elem.bind('mouseover',function(){scope.$apply(function(){scope.color=scope.changeColor();});
       ]
     }
-    //transclude:'element' and transclude:true
-    ng-transclude says where to put the transcluded content. 
-    In this case the DOM content <p>Hello {{name}}</p> is extracted and put inside <div ng-transclude></div>
-    template: '<div ng-transclude></div>'
     
     controller: function($scope, $compile, $http) {this.addChild = function(nestedDirective) {};}
     //controller & require (need outer directive controller)
     require: '^outerDirective',
     link: function(scope, elem, attrs, controllerInstance) {controllerInstance.addChild(scope);}//4th args is controller instance you require
     
-    
-    template: '<p style="background-color:{{color}}">Hello World',
     //compile:(returns link)//perform any DOM transformation before the link function runs; accepts 2 arguments(ele, attr).
     link: function(scope, elem, attrs) {//default a directive gets the parent’s scope. 
       elem.bind('click', function() {
