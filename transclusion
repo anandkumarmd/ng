@@ -2,6 +2,8 @@ http://liamkaufman.com/blog/2013/05/13/understanding-angularjs-directives-part1-
 http://stackoverflow.com/questions/13183005/what-exactly-do-you-do-with-the-transclude-function-and-the-clone-linking-functi
 
 
+
+
 Compiler  (binds DOM w/ scope; make it live/interactive)
 --------
 Compiler is an angular service which traverses the DOM looking for attributes. 
@@ -46,3 +48,11 @@ The resultant HTML will be:
   </div>
 </div>
 =================================================================================================================
+http://stackoverflow.com/questions/15285635/how-to-use-replace-of-directive-definition
+http://plnkr.co/edit/k9qSx15fhSZRMwgAIMP4?p=preview
+
+template w/ replace=true => replace the current element with the contents of the HTML. 
+The replacement process migrates all of the attributes / classes from the old element to the new one.
+
+
+
