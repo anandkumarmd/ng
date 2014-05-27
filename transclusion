@@ -20,3 +20,29 @@ ng-repeat
 Some directives such ng-repeat 'clone' DOM elements once for each item in collection. 
 Having a compile and link phase improves performance since the cloned template only needs to be compiled once, 
 and then linked once for each clone instance.
+===============================================================================================================
+//http://stackoverflow.com/questions/14509959/how-do-i-use-transclusion-in-angularjs?lq=1
+When creating a basic directive, transclusion is easy:
+
+module.directive( 'myTransDir', function () {
+  return {
+    transclude: true,
+    scope: true,
+    replace: true,
+    template: '<div><h1>Hello!</h1><div ng-transclude></div></div>',
+  };
+});
+Because the template includes the ngTransclude directive, it will automatically transclude the contents for me. If I use it like this:
+
+<div my-trans-dir>
+  <p>Some Content</p>
+</div>
+The resultant HTML will be:
+
+<div>
+  <h1>Hello!</h1>
+  <div>
+    <p>Some Content</p>
+  </div>
+</div>
+=================================================================================================================
