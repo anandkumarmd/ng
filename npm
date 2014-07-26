@@ -1,3 +1,11 @@
+change bower's default components folder
+
+Create a file .bowerrc in the project root with the content:
+{
+  "directory" : "public/components"
+}
+Run bower install again.
+========================================================================================
 C:\Users\Kumar>set PATH
 Path=C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;
 
