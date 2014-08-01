@@ -1,5 +1,53 @@
- 4 types of scopes:
+scope injection
+===============
+function myController1 = function($scope) {
+    // not safe for minification
+}
 
+function myController2 = ['$scope', function(sc) {
+    // safe for minification, you could even rename scope
+}]
+
+var myController3 = function(sc) {
+    // safe for minification, but might be hard
+    // to read if controller code gets longer
+}
+myController3.$inject = ['$scope'];            <<------------
+_____________________________________________________________________________________________________
+getting scope from dom element
+==============================
+function tellAngular() {
+    console.log("tellAngular call");
+    var domElt = document.getElementById('someDiv');
+    scope = angular.element(domElt).scope();    <<---------
+    scope.$apply(function() {
+        scope.width = window.innerWidth;
+        scope.height = window.innerHeight;
+    });
+}
+______________________________________________________________________________________________________
+scope watch     //'watch' compares the reference instead of the object by default
+===========     //add 'true' to the end to have it compare the value instead 
+                //::caution:: deep comparisons like this have a performance cost
+                
+scope.$watch('seats', function(newval, oldval){
+                console.log(newval, oldval);
+                updateSeatInfo(scope,element);
+            }, true);                           <<------------------
+
+-----------------------------------------------------------------------------------------------------
+directive scope
+==============
+
+isolated scope: {
+            name: "@",    //(  Text binding / one-way binding )
+            color: "=",   //( Direct model binding / two-way binding )
+            reverse: "&"  //( Behaviour binding / Method binding  )
+         },
+        
+------------------------------------------------------------------------------------------------------        
+4 types of scopes:
+==================
 http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs/14049482#14049482
 https://github.com/angular/angular.js/wiki/Understanding-Scopes
 
