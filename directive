@@ -10,25 +10,27 @@ angular.module('myApp', [])
   $scope.user = {email: 'abc', name: 'myname'};
   $scope.testVar = "Test";
 }])
-.directive('emailUsed', [function() {
-       return {
-            require: 'ngModel',                                               <<-----------------require
-            link: function(scope, elem, attr, ctrl) {
-                console.log("executing");
-                ctrl.$parsers.push(function() {
+.directive('emailUsed', function () {
+    return {
+        require: 'ngModel',                                         <<---------------require
+        link: function (scope, elem, attr, ctrl) {
+            scope.oldValues = [];
+            scope.$watch(attr.ngModel, function(newVal, oldVal) {   <<---------------oldVal
+                if (angular.isDefined(newVal)) {
+                    scope.oldValues.push(newVal);
+                }
+            });
+            ctrl.$parsers.push(function () {
+                if (ctrl.$viewValue.indexOf('@') !== -1) {
                     ctrl.$setValidity('eaCheckingUniqueValue', true);
-                    if(ctrl.$valid) {
-                        console.log("valid");
-                        scope.oldValues = [];
-                        scope.$watch(attr.ngModel, function(newVal, oldVal) {   <<--------------oldVal ??
-                            scope.oldValues.push(newVal);
-                            console.log("new value is: " + newVal);
-                        });
-                        console.log("valid is true");
-                    } else {
-                        console.log("valid is false");
-                    }
-                });
+                    return ctrl.$viewValue;
+                }
+                ctrl.$setValidity('eaCheckingUniqueValue', false);
+                return undefined; // Model is not valid so return undefined.
+            });
+        }
+    };
+});
 ________________________________________________________________________________________________
 Things get much easier in Angular if you focus on data && state, !events.
 
