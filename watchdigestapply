@@ -1,0 +1,19 @@
+http://www.benlesh.com/2013/08/angularjs-watch-digest-and-apply-oh-my.html
+
+What is a $watch? 
+-----------------
+$watches can be used to watch any value, and trigger a function call when that value changes. 
+ 
+Setting up a $watch   1.Setting up a $watch   2.By Function
+
+
+What is $digest?
+----------------
+At it's core, the important thing to know about $digest is that it loops through all watchers
+on the scope it was called on and it's child scopes. and evaluates them to see if they've changed, 
+executing their handlers if they have.
+
+What is $apply?
+==============
+Simply put, it's a wrapper around $rootScope.$digest that evaluates any expression passed to it prior to calling $digest().
+That's it.  So, if you're calling it by itself without passing an argument to it, you may as well just call $digest().
