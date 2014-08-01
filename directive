@@ -1,3 +1,35 @@
+<div ng-app="myApp" ng-controller="TestCtrl">
+{{testVar}}
+    <form novalidate>
+        <input type="text" name="user.email" ng-model="user.email" email-used="/api/user"/>  
+    </form>
+</div>
+
+angular.module('myApp', [])
+.controller('TestCtrl', ['$scope',function($scope) {
+  $scope.user = {email: 'abc', name: 'myname'};
+  $scope.testVar = "Test";
+}])
+.directive('emailUsed', [function() {
+       return {
+            require: 'ngModel',                                               <<-----------------require
+            link: function(scope, elem, attr, ctrl) {
+                console.log("executing");
+                ctrl.$parsers.push(function() {
+                    ctrl.$setValidity('eaCheckingUniqueValue', true);
+                    if(ctrl.$valid) {
+                        console.log("valid");
+                        scope.oldValues = [];
+                        scope.$watch(attr.ngModel, function(newVal, oldVal) {   <<--------------oldVal ??
+                            scope.oldValues.push(newVal);
+                            console.log("new value is: " + newVal);
+                        });
+                        console.log("valid is true");
+                    } else {
+                        console.log("valid is false");
+                    }
+                });
+________________________________________________________________________________________________
 Things get much easier in Angular if you focus on data && state, !events.
 
 $scope = view model for DOM.
