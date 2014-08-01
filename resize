@@ -1,0 +1,29 @@
+
+http://pastebin.com/7bDXuX2f
+----------------------------
+directive('resize', function ($window) {
+        return function (scope, element) {
+                scope.getWinHeight = function() {
+                        return $window.innerHeight;
+                }
+ 
+                var setNavHeight = function(newHeight) {
+                        element.css('height', newHeight + 'px');
+                }
+ 
+                // Set on load
+                scope.$watch(scope.getWinHeight, function (newValue, oldValue) {
+                        setNavHeight(scope.getWinHeight() - 100);
+                }, true);
+ 
+                // Set on resize
+                angular.element($window).bind('resize', function () {
+                        scope.$apply();
+                });
+        };
+}).
+
+// Resizing a div with jQuery
+$(window).bind('resize', function() {
+        $('#mydiv').css('height', ($(window).height() - 100) + 'px');
+}
