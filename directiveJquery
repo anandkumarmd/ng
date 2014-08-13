@@ -1,0 +1,26 @@
+//http://stackoverflow.com/questions/19499863/how-to-wrap-a-jquery-control-as-an-angular-directive\\
+using jquery lib -->> https://github.com/aehlke/tag-it
+------------------------------------------------------------------------------------------------------------------
+jquery
+======
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#myTags").tagit();
+    });
+</script>
+
+>>>>result>>>
+<ul id="myTags">
+    <li>Tag1</li>
+    <li>Tag2</li>
+</ul>
+------------------------------------------------------------------------------------------------------------------
+directive
+=========
+app.directive('tagIt', function (){
+   return function(scope, elem) {
+      elem.tagit();
+   }
+});
+<ul id="myTags" tag-it> ... </ul>
+------------------------------------------------------------------------------------------------------------------
