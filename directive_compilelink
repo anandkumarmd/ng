@@ -1,0 +1,47 @@
+STARTING POINT: element on which angular(ng-app) is defined
+
+When a browser renders a page, it essentially reads the HTML markup, 
+creates a DOM and broadcasts an event when the DOM is ready.
+AngularJS listens for that event and as soon as it hears it, it starts traversing the DOM, 
+looking for an [[ng-app]] attribute on one of the elements.
+
+var app = angular.module('plunker', []);
+
+function createDirective(name) {  
+  return function(){
+    return {
+      restrict: 'E',
+      template: '<child-directive></child-directive>',
+      scope : {
+         list: '=' 
+      }
+      controller: function($scope, $element) {//runs before compilation
+      },
+      compile: function(templateElem, tAttrs){//no scope available yet
+        console.log(name + ': compile');
+        return {
+          pre: function(scope, instanceElem, iAttrs){
+            console.log(name + ': pre link');
+          },
+          post: function(scope, instanceElem, iAttrs){
+            console.log(name + ': post link');
+          }
+        }
+      }
+    }
+  }
+}
+
+app.directive('levelOne', createDirective('levelOne'));  
+app.directive('levelTwo', createDirective('levelTwo'));  
+app.directive('levelThree', createDirective('levelThree'));  
+
+When such an element is found, 
+AngularJS starts processing the DOM using that specific element as the starting point. 
+So if the ng-app attribute is set on the html element, 
+AngularJS will start processing the DOM starting at the html element.
+From that starting point, AngularJS recursively investigates all child elements, 
+looking for patterns that correspond to directives that have been defined in your AngularJS application.
+How AngularJS processes the element depends on the actual directive definition object. 
+You can define a compile function, a link function or both. 
+Or instead of a link function you can opt to define a pre-link function and a post-link function.
