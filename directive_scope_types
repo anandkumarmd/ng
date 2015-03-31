@@ -1,0 +1,30 @@
+DIRECTIVE TYPES (isolated) @ & 
+
+
+==================================================================================
+CALLING SCOPE FUNCTIONS
+==================================================================================
+
+For a directive that uses an isolate scope:
+---------------------------------------------
+<div my-dir ctrl-fn="someCtrlFn(arg1)"></div>
+app.directive('myDir', function() {
+  return {
+    scope: { ctrlFn: '&' },
+    link: function(scope, element, attrs) {
+       ...
+       scope.ctrlFn({arg1: someValue});
+    }
+
+For a directive that does not use an isolate scope:
+-------------------------------------------------
+<div my-dir ctrl-fn="someCtrlFn(arg1)"></div>
+app.directive('myDir', function($parse) {
+  return {
+    scope: true,  // or no new scope -- i.e., remove this line
+    link: function(scope, element, attrs) {
+       var invoker = $parse(attrs.ctrlFn);
+       ...
+       invoker(scope, {arg1: someValue} );
+    }
+-------------------------------------------------
